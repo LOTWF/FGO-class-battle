@@ -14,28 +14,59 @@ const baseAtk =10;
 //let rulpath = document.getElementById("rulimg").innerHTML;
 //let forpath = document.getElementById("forimg").innerHTML;
 //let altpath = document.getElementById("altimg").innerHTML;
-const skindef_div = document.getElementById("skindef");
-const skins1_div = document.getElementById("skin1");
-const skin2_div = document.getElementById("skin2");
-const skin3_div = document.getElementById("skin3");
-
-const sabicon = document.getElementById("sabIC");
-const lanicon = document.getElementById("lanIC");
-const arcicon = document.getElementById("arcIC");
-const casicon = document.getElementById("casIC");
-const ridicon = document.getElementById("ridIC");
-const assicon = document.getElementById("assIC");
-const bericon = document.getElementById("berIC");
-const mooicon = document.getElementById("mooIC");
-const aveicon = document.getElementById("aveIC");
-const rulicon = document.getElementById("rulIC");
-const foricon = document.getElementById("forIC");
-const alticon = document.getElementById("altIC");
-const deficon = document.getElementById("choiceICdef");
-const skin1icon = document.getElementById("choiceICs1");
-const skin2icon = document.getElementById("choiceICs2");
-const skin3icon = document.getElementById("choiceICs3");
-
+class skin {
+  constructor(number, name){
+    this.slot = document.getElementById("skin"+number.toString());
+    this.source = 'images/'+name+number.toString();
+    this.icon = document.getElementById("choiceIC"+number.toString());
+  }
+  setSource(){
+    this.icon.src = this.source;
+  }
+}
+class servant{
+  constructor(name,weak,moderate,strong) {
+    this.name = name;
+    this.slot = document.getElementById(name);
+    this.icon = document.getElementById(name+"IC");
+    this.weak = weak;
+    this.baseDmg = 10;
+    this.weakDmg = 0.5;
+    this.moderateDmg=1.5;
+    this.strongDmg=2;
+    this.moderate = moderate;
+    this.strong = strong;
+    this.skins = new Array();
+    this.skins.push(new skin("def",name));
+    this.skins.push(new skin("s1",name));
+    this.skins.push(new skin("s2",name));
+    this.skins.push(new skin("s3",name));
+    this.slot.addEventListener("click",function(){
+      this.skinchoiceUpdate();
+      game(this.name);
+    })
+    this.skin[0].
+  }
+  skinchoiceUpdate(){
+    for(i = 0; i < skins.length; i++) {
+      skins[i].setSource();
+    }
+  }
+  play(opponent){
+    if (weak.indexOf(opponent) >= 0) {
+      return weakDmg*baseDmg;
+    }
+    else if (moderate.indexOf(opponent) >= 0) {
+      return moderateDmg*baseDmg;
+    }
+    else if (strong.indexOf(opponent) >= 0) {
+      return strongDmg*baseDmg;
+    }
+    else {
+      return baseDmg;
+    }
+  }
+}
 
 const playerHp_span = document.getElementById("player-score");
 const pcHp_span = document.getElementById("pc-score");
@@ -43,384 +74,44 @@ const playerIcon = document.getElementById("playerimg");
 const pcIcon = document.getElementById("pcimg");
 const scoreboard_div = document.querySelector(".scoreboard");
 const results_div = document.getElementById("res");
-const sab_div = document.getElementById("sab");
-const lan_div = document.getElementById("lan");
-const arc_div = document.getElementById("arc");
-const cas_div = document.getElementById("cas");
-const ass_div = document.getElementById("ass");
-const rid_div = document.getElementById("rid");
-const rul_div = document.getElementById("rul");
-const ave_div = document.getElementById("ave");
-const ber_div = document.getElementById("ber");
-const moo_div = document.getElementById("moo");
-const alt_div = document.getElementById("alt");
-const for_div = document.getElementById("for");
 
-function getPcChoice(){
-  const choices = ["sab","lan","arc","cas","ass","rid","ber","rul","ave","moo","alt","for"];
-  const ranchoice = Math.floor(Math.random() * 12);
-  return choices[ranchoice];
+function initClasses(){
+  var sab = new servant('sab',['arc','rul'],['none'],['lan','ber']);
+  var lan = new servant('lan',['sab','rul'],['none'],['arc','ber']);
+  var arc = new servant('arc',['lan','rul'],['none'],['sab','ber']);
+  var cas = new servant('cas',['rid','rul'],['none'],['ass','ber']);
+  var rid = new servant('rid',['ass','rul'],['none'],['cas','ber']);
+  var ass = new servant('ass',['cas','rul'],['none'],['rid','ber']);
+  var ber = new servant('ber',['for'],['sab','lan','arc','cas','ass','ber','rid','alt','moo','ave','rul'],['none']);
+  var rul = new servant('rul',['ave'],['none'],['moo','ber']);
+  var ave = new servant('ave',['moo'],['none'],['rul','ber']);
+  var moo = new servant('moo',['rul'],['none'],['ave','ber']);
+  var alt = new servant('alt',['sab','arc','lan'],['ass','cas','rid'],['for','ber']);
+  var for = new servant('for',['alt'],['none'],['for','ber']);
+  var classlist = new Array(sab,lan,arc,cas,ass,rid,ber,rul,ave,moo,for,alt);
+  return classlist;
 }
 
-function getDamageMods(choice,pcChoice){
-  let multp = 1;
-  let multpc = 1;
-  switch (choice) {
-    case "sab":
-      switch (pcChoice) {
-        case "arc":
-           multp = 0.5;
-           multpc = 2;
-          break;
-        case "lan":
-           multp = 2;
-           multpc = 0.5;
-          break;
-        case "ber":
-           multp = 2;
-           multpc = 1.5;
-          break;
-        case "rul":
-           multp = 0.5;
-           multpc = 1;
-          break;
-        case "alt":
-           multp = 1;
-           multpc = 0.5;
-          break;
-        default:
-           multp = 1;
-           multpc = 1;
-        }
-      break;
-    case "lan":
-      switch (pcChoice) {
-        case "sab":
-           multp = 0.5;
-           multpc = 2;
-          break;
-        case "arc":
-           multp = 2;
-           multpc = 0.5;
-          break;
-        case "ber":
-           multp = 2;
-           multpc = 1.5;
-          break;
-        case "rul":
-           multp = 0.5;
-           multpc = 1;
-          break;
-        case "alt":
-           multp = 1;
-           multpc = 0.5;
-          break;
-        default:
-           multp = 1;
-           multpc = 1;
-        }
-      break;
-    case "arc":
-      switch (pcChoice) {
-        case "lan":
-           multp = 0.5;
-           multpc = 2;
-          break;
-        case "sab":
-           multp = 2;
-           multpc = 0.5;
-          break;
-        case "ber":
-           multp = 2;
-           multpc = 1.5;
-          break;
-        case "rul":
-           multp = 0.5;
-           multpc = 1;
-          break;
-        case "alt":
-           multp = 1;
-           multpc = 0.5;
-          break;
-        default:
-           multp = 1;
-           multpc = 1;
-        }
-      break;
-    case "cas":
-      switch (pcChoice) {
-        case "rid":
-           multp = 0.5;
-           multpc = 2;
-          break;
-        case "ass":
-           multp = 2;
-           multpc = 0.5;
-          break;
-        case "ber":
-           multp = 2;
-           multpc = 1.5;
-          break;
-        case "rul":
-           multp = 0.5;
-           multpc = 1;
-          break;
-        case "alt":
-           multp = 1;
-           multpc = 1.5;
-          break;
-        default:
-           multp = 1;
-           multpc = 1;
-        }
-      break;
-    case "ass":
-      switch (pcChoice) {
-        case "cas":
-           multp = 0.5;
-           multpc = 2;
-          break;
-        case "rid":
-           multp = 2;
-           multpc = 0.5;
-          break;
-        case "ber":
-           multp = 2;
-           multpc = 1.5;
-          break;
-        case "rul":
-           multp = 0.5;
-           multpc = 1;
-          break;
-        case "alt":
-           multp = 1;
-           multpc = 1.5;
-          break;
-        default:
-           multp = 1;
-           multpc = 1;
-        }
-      break;
-    case "rid":
-      switch (pcChoice) {
-        case "ass":
-           multp = 0.5;
-           multpc = 2;
-          break;
-        case "cas":
-           multp = 2;
-           multpc = 0.5;
-          break;
-        case "ber":
-           multp = 2;
-           multpc = 1.5;
-          break;
-        case "rul":
-           multp = 0.5;
-           multpc = 1;
-          break;
-        case "alt":
-           multp = 1;
-           multpc = 1.5;
-          break;
-        default:
-           multp = 1;
-           multpc = 1;
-      }
-      break;
-    case "rul":
-      switch (pcChoice) {
-        case "ave":
-           multp = 0.5;
-           multpc = 2;
-          break;
-        case "moo":
-           multp = 2;
-           multpc = 0.5;
-          break;
-        case "ber":
-           multp = 2;
-           multpc = 1.5;
-          break;
-        case "rul":
-        case "alt":
-        case "for":
-           multp = 1;
-           multpc = 1;
-          break;
-        default:
-           multp = 1;
-           multpc = 0.5;
-      }
-      break;
-
-    case "ave":
-      switch (pcChoice) {
-        case "moo":
-           multp = 0.5;
-           multpc = 2;
-          break;
-        case "rul":
-           multp = 2;
-           multpc = 0.5;
-          break;
-        case "ber":
-           multp = 2;
-           multpc = 1.5;
-          break;
-        default:
-           multp = 1;
-           multpc = 1;
-        }
-      break;
-    case "ber":
-      switch (pcChoice) {
-        case "for":
-           multp = 0.5;
-           multpc = 2;
-          break;
-        case "ber":
-           multp = 1.5;
-           multpc = 1.5;
-          break;
-        default:
-           multp = 1.5;
-           multpc = 2;
-        }
-      break;
-    case "moo":
-      switch (pcChoice) {
-        case "rul":
-           multp = 0.5;
-           multpc = 2;
-          break;
-        case "ave":
-           multp = 2;
-           multpc = 0.5;
-          break;
-        case "ber":
-           multp = 2;
-           multpc = 1.5;
-          break;
-        default:
-           multp = 1;
-           multpc = 1;
-      }
-      break;
-    case "alt":
-      switch (pcChoice) {
-        case "sab":
-        case "lan":
-        case "arc":
-           multp = 0.5;
-           multpc = 1;
-          break;
-        case "cas":
-        case "ass":
-        case "rid":
-           multp = 1.5;
-           multpc = 1;
-          break;
-        case "ber":
-           multp = 2;
-           multpc = 1.5;
-          break;
-        case "for":
-           multp = 0.5;
-           multpc = 2;
-          break;
-        default:
-           multp = 1;
-           multpc = 1;
-      }
-      break;
-
-    case "for":
-      switch (pcChoice) {
-        case "alt":
-           multp = 0.5;
-           multpc = 2;
-          break;
-        case "for":
-           multp = 2;
-           multpc = 2;
-          break;
-        case "ber":
-           multp = 2;
-           multpc = 0.5;
-          break;
-        default:
-           multp = 1;
-           multpc = 1;
-      }
-      break;
-    default:
-       multp = 1;
-       multpc = 1;
-  }
-  return [multp,multpc]
+function getPcChoice(choices){
+  const ranchoice = Math.floor(Math.random() * classlist.length);
+  return choices[ranchoice];
 }
 
 function getresultstr(mod1,mod2){
     return "You deal "+mod1.toString()+" damage and take "+mod2.toString()+" damage"
 }
 
-function getImageSrc(servant) {
-  let source="";
-  switch (servant) {
-    case "sab":
-      source += sabicon.src;
-      break;
-    case "lan":
-      source += lanicon.src;
-      break;
-    case "arc":
-      source += arcicon.src;
-      break;
-    case "cas":
-      source += casicon.src;
-      break;
-    case "ass":
-      source += assicon.src;
-      break;
-    case "ber":
-      source += bericon.src;
-      break;
-    case "moo":
-      source += mooicon.src;
-      break;
-    case "alt":
-      source += alticon.src;
-      break;
-    case "rul":
-      source += rulicon.src;
-      break;
-    case "ave":
-      source += aveicon.src;
-      break;
-    case "for":
-      source += foricon.src;
-      break;
-    case "rid":
-      source += ridicon.src;
-      break;
-    default:
-      source += "images/init2.webp";
-  }
-  return source;
-}
-
-function game(choice){
-  const pcChoice = getPcChoice();
-  const mults = getDamageMods(choice,pcChoice);
-  playerHp = playerHp - mults[1] * baseAtk;
-  pcHp = pcHp - mults[0] * baseAtk;
+function game(choice,classlist){
+  const pcChoice = getPcChoice(classlist);
+  const mult1 = choice.play(pcChoice.name);
+  const mult2 = pcChoice.play(choice.name);
+  playerHp = playerHp - mult2;
+  pcHp = pcHp - mult1;
   pcHp_span.innerHTML = pcHp;
   playerHp_span.innerHTML = playerHp;
-  results_div.innerHTML = getresultstr(mults[0] * baseAtk, mults[1] * baseAtk);
-  pcimg.src = getImageSrc(pcChoice);
-  pcHp_span.innerHTML = pcHp;
-  playerimg.src = getImageSrc(choice);
+  results_div.innerHTML = getresultstr(mult1, mult2);
+  pcimg.src = pcChoice.icon.src;
+  playerimg.src = choice.icon.src;
 }
 
 function setskin(icon,choice){
@@ -434,8 +125,18 @@ function updateSkinList() {
   choiceICs3.src = "images/"+curClass+"s3.png";
 }
 
-function main(){
+function initSkinlist(){
+  var skins = new Array();
+  skins.push(new skin("def",name));
+  skins.push(new skin("s1",name));
+  skins.push(new skin("s2",name));
+  skins.push(new skin("s3",name));
+  return skins;
+}
 
+function main(){
+  servants = initClasses();
+  skins = initSkinlist();
   skindef_div.addEventListener("click",function(){
   switch (curClass) {
     case "sab":

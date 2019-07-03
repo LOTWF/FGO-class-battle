@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>FGO Class Battle</title>
+    <link rel="stylesheet" href="styleselection.css">
+  </head>
+  <body>
+    <header>
+    <h1>FGO Class Battle</h1>
+    </header>
+    <div class="cost">
+      <div id="selected" class="badge">cost</div>
+      <div id="total" class="badge">tot</div>
+      <span id="curCost">0</span>/<span id="maxCost">30</span>
+      <input id="startGame" type="button" name="START" value="START">
+    </div>
+    <p id="action-prompt">Choose your servants</p>
+    <div class="choices">
+      <div class="choice" id="sab">
+        <img src="images/sabtype.png" alt="" width="80px" height="80px" id="sabIC">
+      </div>
+      <div class="choice" id="lan">
+        <img src="images/lantype.png" alt="" width="80px" height="80px" id="lanIC">
+      </div>
+      <div class="choice" id="arc">
+        <img src="images/arctype.png" alt="" width="80px" height="80px" id="arcIC">
+      </div>
+      <div class="choice" id="cas">
+        <img src="images/castype.png" alt="" width="80px" height="80px" id="casIC">
+      </div>
+      <div class="choice" id="rid">
+        <img src="images/ridtype.png" alt="" width="80px" height="80px" id="ridIC">
+      </div>
+      <div class="choice" id="ass">
+        <img src="images/asstype.png" alt="" width="80px" height="80px" id="assIC">
+      </div>
+      <div class="choice" id="ber">
+        <img src="images/bertype.png" alt="" width="80px" height="80px" id="berIC">
+      </div>
+      <div class="choice" id="rul">
+        <img src="images/rultype.png" alt="" width="80px" height="80px" id="rulIC">
+      </div>
+      <div class="choice" id="ave">
+        <img src="images/avetype.png" alt="" width="80px" height="80px" id="aveIC">
+      </div>
+      <div class="choice" id="moo">
+        <img src="images/mootype.png" alt="" width="80px" height="80px" id="mooIC">
+      </div>
+      <div class="choice" id="alt">
+        <img src="images/alttype.png" alt="" width="80px" height="80px" id="altIC">
+      </div>
+      <div class="choice" id="for">
+        <img src="images/fortype.png" alt="" width="80px" height="80px" id="forIC">
+      </div>
+    </div>
+    <p id="sel-prompt">Choose your servants</p>
+
+    <div class="skin">
+      <div class="skinchoice" id="skins1">
+        <img src="images/init1.webp" alt="" width="100px" height="150px" id="choiceICs1">
+        <div id="s1msk" class="mask">
+        <h2 id="s1name">name</h2>
+        <p id="s1cd">cost:1  dmg: 2</p>
+        </div>
+      </div>
+      <div class="skinchoice" id="skins2">
+        <img src="images/init1.webp" alt="" width="100px" height="150px" id="choiceICs2">
+        <div id="s2msk" class="mask">
+        <h2 id="s2name">name</h2>
+        <p id="s2cd">cost:1  dmg: 2</p>
+        </div>
+      </div>
+      <div class="skinchoice" id="skins3">
+        <img src="images/init1.webp" alt="" width="100px" height="150px" id="choiceICs3">
+        <div id="s3msk" class="mask">
+        <h2 id="s3name">name</h2>
+        <p id="s3cd">cost:1  dmg: 2</p>
+        </div>
+      </div>
+      <div class="skinchoice" id="skins4">
+        <img src="images/init1.webp" alt="" width="100px" height="150px" id="choiceICs4">
+        <div id="s4msk" class="mask">
+        <h2 id="s4name">name</h2>
+        <p id="s4cd">cost:1  dmg: 2</p>
+        </div>
+      </div>
+      <div class="skinchoice" id="skins5">
+        <img src="images/init1.webp" alt="" width="100px" height="150px" id="choiceICs5">
+        <div id="s5msk" class="mask">
+        <h2 id="s5name">name</h2>
+        <p id="s5cd">cost:1  dmg: 2</p>
+        </div>
+      </div>
+      <div class="skinchoice" id="skins6">
+        <img src="images/init1.webp" alt="" width="100px" height="150px" id="choiceICs6">
+        <div id="s6msk" class="mask">
+        <h2 id="s6name">name</h2>
+        <p id="s6cd">cost:1  dmg: 2</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="typechart">
+      <img src="images/typechart.jpg" alt="" width="500px" height="300px">
+    </div>
+
+    <div class="hidden">
+      <p id="sabimg">Saber.webp</p>
+      <p id="lancimg">lancer.png</p>
+      <p id="arcimg">archer.png</p>
+      <p id="casimg">caster.png</p>
+      <p id="ridimg">rider.jpg</p>
+      <p id="assimg">assassin.png</p>
+      <p id="berimg">Berserker.webp</p>
+      <p id="rulimg">ruler.jpg</p>
+      <p id="aveimg">avenger.png</p>
+      <p id="mooimg">mooncancer.jpg</p>
+      <p id="altimg">AlterEgo.webp</p>
+      <p id="forimg">Foreigner.webp</p>
+    </div>
+    <script src="cardlist.js" charset="utf-8"></script>
+    <script src="selection.js" charset="utf-8"></script>
+  </body>
+</html>
