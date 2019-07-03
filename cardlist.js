@@ -92,9 +92,9 @@ function makeCards(){
   cardlist[4].push(new card(59,'alt',10,5,'images/alts5.png','Okita Alter'));
   cardlist[5].push(new card(71,'alt',12,6,'images/alts6.png','Meltililith'));
   //foreigners
-  cardlist[0].push(new card(12,'for',8,4,'images/fors1.png','Ganesha'));
-  cardlist[1].push(new card(24,'for',10,5,'images/fors2.png','BB Summer'));
-  cardlist[2].push(new card(36,'for',12,6,'images/fors3.png','BB'));
+  cardlist[0].push(new card(12,'for',8,4,'images/fors1.png','Mysterious Heroine XX'));
+  cardlist[1].push(new card(24,'for',10,5,'images/fors2.png','Katsushika Hokusai'));
+  cardlist[2].push(new card(36,'for',12,6,'images/fors3.png','Abigail Williams'));
   cardlist[3].push(null);
   cardlist[4].push(null);
   cardlist[5].push(null);
