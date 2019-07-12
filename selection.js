@@ -1,3 +1,5 @@
+
+let diff = 2;
 //let sabpath = document.getElementById("sabimg").innerHTML;
 //let lanpath = document.getElementById("lanimg").innerHTML;
 //let arcpath = document.getElementById("arcimg").innerHTML;
@@ -97,15 +99,17 @@ function ind2Serv(ind){
 }
 
 class player{
-  constructor(){
+  constructor(mc){
     this.deck = new Array();
     this.curCost = 0;
-    this.maxCost = parseInt(document.getElementById("maxCost").innerHTML,10);
+    this.maxCost = mc;
+    document.getElementById("maxCost").innerHTML = mc.toString();
     this.costhtml = document.getElementById("curCost");
   }
   addCard(card){
     this.deck.push(card);
     this.curCost += card.cost;
+    return true;
   }
   removeCard(card){
     for( var i = 0; i < this.deck.length; i++){
@@ -114,13 +118,15 @@ class player{
      }
     }
     this.curCost -= card.cost;
+    return false;
   }
   selecter(card){
+    var retVal = true;
     if(this.deck.includes(card)==false){
-      this.addCard(card);
+      retVal = this.addCard(card);
     }
     else{
-      this.removeCard(card);
+      retVal = this.removeCard(card);
     }
     costhtml.innerHTML = this.curCost.toString();
     if (this.curCost<= this.maxCost) {
@@ -129,6 +135,7 @@ class player{
     else {
       costhtml.style.color = 'red';
     }
+    return retVal;
   }
 }
 class viewSlot {
@@ -142,7 +149,6 @@ class viewSlot {
     if(this.cards[serv2Index(sclass)] != null){
       this.slot.style.display = 'inline-block';
       this.icon.src = 'images/'+sclass+this.pos+'.png';
-      console.log(this.slot);
       this.slot.childNodes[3].childNodes[1].innerHTML = this.cards[serv2Index(sclass)].name;
       this.slot.childNodes[3].childNodes[3].innerHTML = 'Dmg:'+this.cards[serv2Index(sclass)].baseDmg.toString()+'   Cost:'+this.cards[serv2Index(sclass)].cost.toString();
     }
@@ -152,6 +158,9 @@ class viewSlot {
   }
 }
 
+function updateTextInput(value){
+  document.getElementById('difficulty').innerHTML = 'difficulty:'+document.getElementById('diffVal').value;
+}
 
 class classSlot {
   constructor(serv){
@@ -221,16 +230,27 @@ function setskin(icon,choice){
 
 
 function main(){
+  var mc = 30;
+  console.log(window.localStorage.getItem('costxp'));
+  if (window.localStorage.getItem('costxp') === null || window.localStorage.getItem('costxp') < 20) {
+    window.localStorage.setItem('costxp',30);
+  }
+  else if (window.localStorage.getItem('costxp') >100) {
+    window.localStorage.setItem('costxp',100);
+  }
+  else {
+    mc = window.localStorage.getItem('costxp');
+  }
+
   //var cardlist = initCards();
   var cardlist = makeCards();
-  var player1 = new player();
-  console.log(cardlist);
+  var player1 = new player(mc);
   var viewslots = initViewSlots2(cardlist,player1);
   var classlist = initClassSlots();
+  refreshView(viewslots);
   for (var i = 0; i < viewslots.length; i++) {
     viewslots[i].slot.addEventListener("click",function(){
-      player1.selecter(viewslots[parseInt(this.id[this.id.length-1])-1].cards[serv2Index(curClass)]);
-      console.log(this);
+      var selected = player1.selecter(viewslots[parseInt(this.id[this.id.length-1])-1].cards[serv2Index(curClass)]);
     });
   }
   for (var i = 0; i < classlist.length; i++) {
@@ -240,7 +260,13 @@ function main(){
     });
   }
   document.getElementById('startGame').addEventListener("click",function(){
-    window.location.href = "index.html";
+    if (player1.curCost<=player1.maxCost && player1.deck.length>0) {
+      window.localStorage.setItem("player1", JSON.stringify(player1.deck));
+      window.localStorage.setItem("difficulty", parseInt(document.getElementById('diffVal').value));
+      console.log(window.localStorage.getItem('difficulty'));
+      window.location.href = "gamev2.html";
+    }
+
   });
 }
 main();

@@ -101,3 +101,25 @@ function makeCards(){
 
 return cardlist;
 }
+
+function get_defaultdecks(lv){
+  var cardlist = makeCards();
+  var newdeck = new Array();
+  if (lv<4) {
+    for (var i = 0; i < 7; i++) {
+      newdeck.push(cardlist[lv][i]);
+      newdeck.push(cardlist[lv+1][i]);
+    }
+  }
+  else if (lv<6) {
+    for (var i = 0; i < 7; i++) {
+      newdeck.push(cardlist[lv][i]);
+      newdeck.push(cardlist[lv+1][i]);
+    }
+    for (var i = 7; i < 12; i++) {
+      newdeck.push(cardlist[lv-4][i]);
+      newdeck.push(cardlist[lv-3][i]);
+    }
+  }
+  return newdeck;
+}

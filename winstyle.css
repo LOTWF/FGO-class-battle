@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css?family=Asap:400,500,500i,700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+header {
+  background: white;
+  padding: 20px
+}
+h1 {
+  color: black;
+  text-align: center;
+  font-family: Asap, sans-serif;
+}
+body {
+  background-color: Gold;
+}
+
+.result {
+  border: 3px solid aqua;
+  width: 500px;
+  margin: 80px auto;
+  color: white;
+  font-size: 46px;
+  border-radius: 5px;
+  text-align: center;
+  padding: 15px 20px;
+  font-family: Asap sans-serif;
+  position: relative;
+  background-color: blue;
+}
+
+.again{
+  text-align: center;
+  border: 2px solid white;
+  color: black;
+  width: 200px;
+  background-color: silver;
+  border-radius: 30%;
+}
