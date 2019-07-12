@@ -101,6 +101,7 @@ body {
   width: 108px;
   height: 158px;
   transition: all 0.5s ease;
+  position: relative;
 }
 .skinchoice:hover {
   cursor: pointer;
