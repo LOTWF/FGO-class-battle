@@ -237,6 +237,7 @@ function main(){
   }
   else if (window.localStorage.getItem('costxp') >100) {
     window.localStorage.setItem('costxp',100);
+    mc = 100;
   }
   else {
     mc = window.localStorage.getItem('costxp');
